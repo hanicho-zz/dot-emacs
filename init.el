@@ -24,7 +24,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(indent-guide-face ((t (:foreground "gray20"))))
  '(minimap-active-region-background ((t (:background "gray40"))))
  '(minimap-font-face ((t (:height 30)))))
 
@@ -76,6 +75,13 @@
 (show-paren-mode 1)
 (blink-cursor-mode -1)
 (setq-default indent-tabs-mode nil)
+;; (display-time-mode 1)
+;; (display-battery-mode 1)
+
+(require 'smart-mode-line)
+(setq sml/no-confirm-load-theme t)
+(setq sml/theme 'powerline)
+(sml/setup)
 
 (setq backup-directory-alist
       `((".*" . ,temporary-file-directory)))
@@ -183,7 +189,7 @@
 (require 'golden-ratio)
 (golden-ratio-mode 1)
 
-(if window-system
+(when window-system
     (progn
       (defun font-existsp (font)
         (if (null (x-list-fonts font))
