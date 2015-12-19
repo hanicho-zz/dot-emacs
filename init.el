@@ -53,6 +53,7 @@
     nyan-mode
     nyan-prompt
     projectile
+    racket-mode
     rainbow-delimiters
     rainbow-mode
     smart-mode-line
@@ -76,7 +77,6 @@
 (blink-cursor-mode -1)
 (setq-default indent-tabs-mode nil)
 ;; (display-time-mode 1)
-;; (display-battery-mode 1)
 
 (require 'smart-mode-line)
 (setq sml/no-confirm-load-theme t)
@@ -234,7 +234,4 @@
       (setq nyan-wavy-trail t)
 
       (require 'nyan-prompt)
-      (add-hook 'eshell-load-hook 'nyan-prompt-enable)
-
-      (require 'zone)
-      (zone-when-idle 600)))
+      (add-hook 'eshell-load-hook 'nyan-prompt-enable)))
