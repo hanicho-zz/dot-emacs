@@ -17,7 +17,8 @@
  '(minimap-minimum-width 10)
  '(minimap-recenter-type (quote middle))
  '(minimap-update-delay 0.1)
- '(minimap-width-fraction 0.1))
+ '(minimap-width-fraction 0.1)
+ '(rainbow-delimiters-max-face-count 7))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -25,7 +26,16 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(minimap-active-region-background ((t (:background "gray40"))))
- '(minimap-font-face ((t (:height 30)))))
+ '(minimap-font-face ((t (:height 30))))
+ '(rainbow-delimiters-depth-1-face ((t (:foreground "tomato1"))))
+ '(rainbow-delimiters-depth-2-face ((t (:foreground "chocolate1"))))
+ '(rainbow-delimiters-depth-3-face ((t (:foreground "goldenrod1"))))
+ '(rainbow-delimiters-depth-4-face ((t (:foreground "lime green"))))
+ '(rainbow-delimiters-depth-5-face ((t (:foreground "deep sky blue"))))
+ '(rainbow-delimiters-depth-6-face ((t (:foreground "SlateBlue1"))))
+ '(rainbow-delimiters-depth-7-face ((t (:foreground "MediumOrchid1"))))
+ '(rainbow-delimiters-mismatched-face ((t (:foreground "black" :box (:line-width 1 :color "grey75")))))
+ '(rainbow-delimiters-unmatched-face ((t (:foreground "black" :box (:line-width 1 :color "grey75"))))))
 
 (require 'package)
 (package-initialize)
@@ -38,7 +48,8 @@
   (package-refresh-contents))
 
 (defvar my-packages
-  '(color-theme
+  '(cider
+    color-theme
     company
     company-ghc
     company-jedi
@@ -52,6 +63,7 @@
     minimap
     nyan-mode
     nyan-prompt
+    powerline
     projectile
     racket-mode
     rainbow-delimiters
@@ -115,8 +127,7 @@
 (ido-yes-or-no-mode 1)
 (ido-vertical-mode 1)
 
-(global-set-key (kbd "C-c C-c") 'comment-region)
-(global-set-key (kbd "C-c C-d") 'uncomment-region)
+(global-set-key (kbd "C-c C-c") 'comment-or-uncomment-region)
 (global-set-key (kbd "C-c C-r") 'replace-string)
 
 (require 'smex)
