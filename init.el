@@ -156,14 +156,14 @@
 (add-to-list 'company-backends 'company-ghc)
 (add-hook 'after-init-hook 'global-company-mode)
 
-(require 'uncrustify-mode)
-(add-hook 'c-mode-common-hook
-          '(lambda ()
-             (uncrustify-mode 1)))
+;; (require 'uncrustify-mode)
+;; (add-hook 'c-mode-common-hook
+;;           '(lambda ()
+;;              (uncrustify-mode 1)))
 
-(add-hook 'java-mode-hook
-          '(lambda ()
-             (uncrustify-mode 1)))
+;; (add-hook 'java-mode-hook
+;;           '(lambda ()
+;;              (uncrustify-mode 1)))
 
 (add-hook 'text-mode-hook
           (lambda ()
@@ -178,6 +178,31 @@
   (add-hook hook
             (lambda ()
               (flyspell-mode -1))))
+
+(defun c-lineup-arglist-tabs-only (ignored)
+  "Line up argument lists by tabs, not spaces"
+  (let* ((anchor (c-langelem-pos c-syntactic-element))
+         (column (c-langelem-2nd-pos c-syntactic-element))
+         (offset (- (1+ column) anchor))
+         (steps (floor offset c-basic-offset)))
+    (* (max steps 1)
+       c-basic-offset)))
+
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            ;; Add kernel style
+            (c-add-style
+             "linux-tabs-only"
+             '("linux" (c-offsets-alist
+                        (arglist-cont-nonempty
+                         c-lineup-gcc-asm-reg
+                         c-lineup-arglist-tabs-only))))))
+
+(add-hook 'c-mode-hook
+          (lambda ()
+            (setq indent-tabs-mode t)
+            (setq show-trailing-whitespace t)
+            (c-set-style "linux-tabs-only")))
 
 (require 'projectile)
 (require 'rainbow-delimiters)
@@ -197,52 +222,52 @@
 (require 'smartparens-config)
 (smartparens-global-mode 1)
 
-(require 'golden-ratio)
-(golden-ratio-mode 1)
+;; (require 'golden-ratio)
+;; (golden-ratio-mode 1)
 
 (when window-system
-    (progn
-      (defun font-existsp (font)
-        (if (null (x-list-fonts font))
-            nil
-          t))
+  (progn
+    (defun font-existsp (font)
+      (if (null (x-list-fonts font))
+          nil
+        t))
 
-      (defvar my-font "Ubuntu Mono 11")
-      (let ((set-font "Monospace 10"))
-        (when (font-existsp my-font)
-          (setq set-font my-font))
+    (defvar my-font "Ubuntu Mono 11")
+    (let ((set-font "Monospace 10"))
+      (when (font-existsp my-font)
+        (setq set-font my-font))
 
-        (set-face-attribute 'default nil :font set-font))
+      (set-face-attribute 'default nil :font set-font))
 
-      (global-unset-key (kbd "C-z"))
+    (global-unset-key (kbd "C-z"))
 
-      (require 'minimap)
-      ;; (minimap-mode)
+    (require 'minimap)
+    ;; (minimap-mode)
 
-      (require 'sublimity)
-      ;; (require 'sublimity-scroll)
-      ;; (require 'sublimity-map)
-      (require 'sublimity-attractive)
-      (sublimity-mode 1)
-      ;; (setq sublimity-scroll-weight 5)
-      ;; (setq sublimity-scroll-drift-length 10)
-      (setq sublimity-attractive-centering-width 150)
-      (sublimity-attractive-hide-vertical-border)
-      (sublimity-attractive-hide-bars)
-      ;; (sublimity-attractive-hide-fringes)
-      ;; (sublimity-attractive-hide-modelines)
-      ;; (setq sublimity-map-size 30)
-      ;; (setq sublimity-map-fraction 0.3)
-      ;; (setq sublimity-map-text-scale -7)
-      ;; (sublimity-map-set-delay nil)
+    (require 'sublimity)
+    ;; (require 'sublimity-scroll)
+    ;; (require 'sublimity-map)
+    (require 'sublimity-attractive)
+    (sublimity-mode 1)
+    ;; (setq sublimity-scroll-weight 5)
+    ;; (setq sublimity-scroll-drift-length 10)
+    (setq sublimity-attractive-centering-width 150)
+    (sublimity-attractive-hide-vertical-border)
+    (sublimity-attractive-hide-bars)
+    ;; (sublimity-attractive-hide-fringes)
+    ;; (sublimity-attractive-hide-modelines)
+    ;; (setq sublimity-map-size 30)
+    ;; (setq sublimity-map-fraction 0.3)
+    ;; (setq sublimity-map-text-scale -7)
+    ;; (sublimity-map-set-delay nil)
 
-      (require 'latex-preview-pane)
-      (latex-preview-pane-enable)
+    (require 'latex-preview-pane)
+    (latex-preview-pane-enable)
 
-      (require 'nyan-mode)
-      (nyan-mode)
-      (nyan-start-animation)
-      (setq nyan-wavy-trail t)
+    (require 'nyan-mode)
+    (nyan-mode)
+    (nyan-start-animation)
+    (setq nyan-wavy-trail t)
 
-      (require 'nyan-prompt)
-      (add-hook 'eshell-load-hook 'nyan-prompt-enable)))
+    (require 'nyan-prompt)
+    (add-hook 'eshell-load-hook 'nyan-prompt-enable)))
